@@ -9,7 +9,7 @@ jobs:
 
         strategy:
             matrix:
-                plattform: [alpine]
+                platform: [alpine]
                 phplint_version: [3.0.3]
 
         steps:
@@ -21,19 +21,19 @@ jobs:
               uses: docker/build-push-action@v2
               with:
                   push: false
-                  tags: iermentraut/phplint:${{ matrix.phplint_version }}-${{ matrix.plattform }}
+                  tags: iermentraut/phplint:${{ matrix.phplint_version }}-${{ matrix.platform }}
                   build-args: |
-                      PLATTFORM=${{ matrix.plattform }}
+                      PLATFORM=${{ matrix.platform }}
                       COMPOSER_VERSION=2.1.3
                       PHPLINT_VERSION=${{ matrix.phplint_version }}
                       PHP_VERSION=8.0
-                  outputs: type=docker,dest=${{ matrix.phplint_version }}-${{ matrix.plattform }}.tar
+                  outputs: type=docker,dest=${{ matrix.phplint_version }}-${{ matrix.platform }}.tar
 
             - name: Upload artifact
               uses: actions/upload-artifact@v2
               with:
-                  name: ${{ matrix.phplint_version }}-${{ matrix.plattform }}
-                  path: ${{ matrix.phplint_version }}-${{ matrix.plattform }}.tar
+                  name: ${{ matrix.phplint_version }}-${{ matrix.platform }}
+                  path: ${{ matrix.phplint_version }}-${{ matrix.platform }}.tar
                   if-no-files-found: error # 'warn' or 'ignore' are also available, defaults to `warn`
 
     Test:
@@ -53,8 +53,8 @@ jobs:
 
             - name: Load and test Docker image
               run: |
-                  docker load --input ${{ matrix.phplint_version }}.tar
-                  docker run --rm iermentraut/phplint:${{ matrix.phplint_version }}
+                  docker load --input ${{ matrix.phplint_version }}-${{ matrix.platform }}.tar
+                  docker run --rm iermentraut/phplint:${{ matrix.phplint_version }}-${{ matrix.platform }}
 
     Publish:
         runs-on: ubuntu-20.04
@@ -66,10 +66,10 @@ jobs:
             - name: Download artifact
               uses: actions/download-artifact@v2
               with:
-                  name: ${{ matrix.phplint_version }}
+                  name: ${{ matrix.phplint_version }}-${{ matrix.platform }}
 
             - name: Load Docker image
-              run: docker load --input ${{ matrix.phplint_version }}.tar
+              run: docker load --input ${{ matrix.phplint_version }}-${{ matrix.platform }}.tar
 
             - name: Login to DockerHub
               uses: docker/login-action@v1
@@ -82,4 +82,4 @@ jobs:
               uses: docker/build-push-action@v2
               with:
                   push: true
-                  tags: iermentraut/phplint:${{ matrix.phplint_version }}
+                  tags: iermentraut/phplint:${{ matrix.phplint_version }}-${{ matrix.platform }}
