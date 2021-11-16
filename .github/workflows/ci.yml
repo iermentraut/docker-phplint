@@ -9,6 +9,7 @@ jobs:
 
         strategy:
             matrix:
+                plattform: [alpine]
                 phplint_version: [3.0.3]
 
         steps:
@@ -20,18 +21,19 @@ jobs:
               uses: docker/build-push-action@v2
               with:
                   push: false
-                  tags: iermentraut/phplint:${{ matrix.phplint_version }}
+                  tags: iermentraut/phplint:${{ matrix.phplint_version }}-${{ matrix.plattform }}
                   build-args: |
+                      PLATTFORM=${{ matrix.plattform }}
                       COMPOSER_VERSION=2.1.3
                       PHPLINT_VERSION=${{ matrix.phplint_version }}
                       PHP_VERSION=8.0
-                  outputs: type=docker,dest=${{ matrix.phplint_version }}.tar
+                  outputs: type=docker,dest=${{ matrix.phplint_version }}-${{ matrix.plattform }}.tar
 
             - name: Upload artifact
               uses: actions/upload-artifact@v2
               with:
-                  name: ${{ matrix.phplint_version }}
-                  path: ${{ matrix.phplint_version }}.tar
+                  name: ${{ matrix.phplint_version }}-${{ matrix.plattform }}
+                  path: ${{ matrix.phplint_version }}-${{ matrix.plattform }}.tar
                   if-no-files-found: error # 'warn' or 'ignore' are also available, defaults to `warn`
 
     Test:
@@ -49,9 +51,6 @@ jobs:
               with:
                   name: ${{ matrix.phplint_version }}
 
-            - run: |
-                  ls -lah
-
             - name: Load and test Docker image
               run: |
                   docker load --input ${{ matrix.phplint_version }}.tar
@@ -68,9 +67,6 @@ jobs:
               uses: actions/download-artifact@v2
               with:
                   name: ${{ matrix.phplint_version }}
-
-            - run: |
-                  ls -lah
 
             - name: Load Docker image
               run: docker load --input ${{ matrix.phplint_version }}.tar
