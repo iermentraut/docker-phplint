@@ -1,9 +1,11 @@
 # PHPLint Docker
 
-![GitHub](https://img.shields.io/github/license/iermentraut/docker-phplint)
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/iermentraut/docker-phplint/ci/master)
-[![Docker Pulls](https://img.shields.io/docker/pulls/iermentraut/phplint.svg)]()
 [![GitHub](https://badgen.net/badge/icon/github?icon=github&label)](https://github.com/iermentraut/docker-phplint)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/iermentraut/docker-phplint/ci/master)
+![GitHub](https://img.shields.io/github/license/iermentraut/docker-phplint)
+
+[![Docker](https://badgen.net/badge/icon/docker?icon=docker&label)](https://hub.docker.com/r/iermentraut/phplint)
+[![Docker Pulls](https://img.shields.io/docker/pulls/iermentraut/phplint.svg)]()
 
 ## Description
 
