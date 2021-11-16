@@ -10,7 +10,7 @@ jobs:
         strategy:
             matrix:
                 platform: [alpine]
-                phplint_version: [3.0.3]
+                phplint_version: [3.0.3, 3.0.2]
 
         steps:
             - name: Set up Docker Buildx
@@ -42,7 +42,7 @@ jobs:
         strategy:
             matrix:
                 platform: [alpine]
-                phplint_version: [3.0.3]
+                phplint_version: [3.0.3, 3.0.2]
         steps:
             - name: Set up Docker Buildx
               uses: docker/setup-buildx-action@v1
@@ -63,7 +63,7 @@ jobs:
         strategy:
             matrix:
                 platform: [alpine]
-                phplint_version: [3.0.3]
+                phplint_version: [3.0.3, 3.0.2]
         steps:
             - name: Download artifact
               uses: actions/download-artifact@v2

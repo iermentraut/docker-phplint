@@ -17,7 +17,8 @@ All supported tags also have:
 
 `alpine` based images:
 
-- `3.0.3-alpine` ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/iermentraut/phplint/3.0.3)
+- `3.0.3-alpine` ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/iermentraut/phplint/3.0.3-alpine?style=plastic)
+- `3.0.2-alpine` ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/iermentraut/phplint/3.0.2-alpine?style=plastic)
 
 Check out [Docker Hub](https://hub.docker.com/r/iermentraut/phplint/tags)
 for available tags.
