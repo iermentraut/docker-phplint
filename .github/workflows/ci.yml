@@ -1,7 +1,12 @@
 ---
 name: ci
 
-on: [push]
+on:
+    push:
+        paths:
+            - Dockerfile
+            - .dockerignore
+            - entrypoint.sh
 
 jobs:
     Build:
