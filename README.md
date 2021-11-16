@@ -3,7 +3,6 @@
 ![GitHub](https://img.shields.io/github/license/iermentraut/docker-phplint)
 ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/iermentraut/docker-phplint/ci/master)
 [![Docker Pulls](https://img.shields.io/docker/pulls/iermentraut/phplint.svg)]()
-![Docker Image Size (tag)](https://img.shields.io/docker/image-size/iermentraut/phplint/3.0.3)
 
 ## Description
 
@@ -18,7 +17,7 @@ All supported tags also have:
 
 `alpine` based images:
 
-- `iermentraut/phplint:VERSION-alpine` refers release version
+- `3.0.3-alpine` ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/iermentraut/phplint/3.0.3)
 
 Check out [Docker Hub](https://hub.docker.com/r/iermentraut/phplint/tags)
 for available tags.

@@ -49,7 +49,7 @@ jobs:
             - name: Download artifact
               uses: actions/download-artifact@v2
               with:
-                  name: ${{ matrix.phplint_version }}
+                  name: ${{ matrix.phplint_version }}-${{ matrix.platform }}
 
             - name: Load and test Docker image
               run: |
