@@ -83,3 +83,8 @@ jobs:
               with:
                   push: true
                   tags: iermentraut/phplint:${{ matrix.phplint_version }}-${{ matrix.platform }}
+
+            - name: Double-check whether pushes to DockerHub were successful
+              run: |
+                  docker pull iermentraut/phplint:${{ matrix.phplint_version }}-${{ matrix.platform }}
+                  docker run --rm iermentraut/phplint:${{ matrix.phplint_version }}-${{ matrix.platform }}
