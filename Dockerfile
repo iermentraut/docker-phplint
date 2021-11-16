@@ -1,6 +1,6 @@
 ARG COMPOSER_IMAGE_VERSION=2.1.3
 ARG PHPLINT_PACKAGE_VERSION=3.0.3
-ARG PHP_VERSION=7.4
+ARG PHP_VERSION=8.0
 
 FROM composer:${COMPOSER_IMAGE_VERSION} AS build
 
@@ -15,6 +15,12 @@ RUN \
     composer --quiet global require overtrue/phplint:${PHPLINT_PACKAGE_VERSION}
 
 FROM php:${PHP_VERSION}-cli-alpine
+
+RUN \
+  set -xe && \
+  apk update && \
+  apk add --no-cache \
+    bash=5.1.4-r0
 
 WORKDIR /src
 
