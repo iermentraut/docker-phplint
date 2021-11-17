@@ -4,7 +4,14 @@ name: ci
 on:
     push:
         paths:
-            - .github/
+            - .github/**
+            - Dockerfile
+            - .dockerignore
+            - entrypoint.sh
+
+    pull_request:
+        paths:
+            - .github/**
             - Dockerfile
             - .dockerignore
             - entrypoint.sh
