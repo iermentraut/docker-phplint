@@ -1,10 +1,12 @@
 #!/bin/bash -xe
 
+# @TODO if $1 -> $@
 if [ -f /src/.phplint.yml ]; then
-  /root/.composer/vendor/bin/phplint -vvv -c /src/.phplint.yml -- /src
+  phplint -vvv -c /src/.phplint.yml -- /src
 else
-  /root/.composer/vendor/bin/phplint \
+  phplint \
     -vvv \
+    --no-cache \
     --no-configuration \
     --warning \
     --exclude=vendor \

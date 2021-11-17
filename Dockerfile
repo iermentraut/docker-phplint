@@ -12,11 +12,17 @@ ARG PHPLINT_PACKAGE_VERSION
 ARG PHP_VERSION
 ARG PLATFORM
 
+ENV COMPOSER_HOME=/app \
+    PATH=/app/vendor/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
 RUN \
     set -xe && \
     composer --quiet global require overtrue/phplint:${PHPLINT_PACKAGE_VERSION}
 
 FROM php:${PHP_VERSION}-cli-${PLATFORM}
+
+ENV COMPOSER_HOME=/app \
+    PATH=/app/vendor/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN \
   set -xe && \
@@ -26,10 +32,12 @@ RUN \
 
 WORKDIR /src
 
-COPY --from=build /tmp/vendor /root/.composer/vendor
+COPY --from=build /app /app
 
 COPY entrypoint.sh /entrypoint.sh
 
 RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
+
+CMD [ "--help" ]
