@@ -52,10 +52,12 @@ jobs:
     Test:
         runs-on: ubuntu-20.04
         needs: [build]
+
         strategy:
             matrix:
                 platform: [alpine]
                 phplint_version: [3.0.3, 3.0.2]
+
         steps:
             - name: Set up Docker Buildx
               uses: docker/setup-buildx-action@v1
@@ -65,16 +67,31 @@ jobs:
               with:
                   name: ${{ matrix.phplint_version }}-${{ matrix.platform }}
 
-            - name: Find known vulnerabilities in Docker images with Grype (https://github.com/anchore/grype)
-              run: |
-                  curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
-                  grype ${{ matrix.phplint_version }}-${{ matrix.platform }}.tar
-
-            - name: Simple functionality test
+            - name: Load Docker images from .tar
               run: |
                   docker load --input ${{ matrix.phplint_version }}-${{ matrix.platform }}.tar
+
+            - name: Basic functionality test
+              run: |
                   echo "<?php echo 'Hello world'; ?>" > $(pwd)/hello.php
                   docker run --rm -v $(pwd):/src iermentraut/phplint:${{ matrix.phplint_version }}-${{ matrix.platform }}
+                  docker run --rm -u $UID -v $(pwd):/src iermentraut/phplint:${{ matrix.phplint_version }}-${{ matrix.platform }}
+
+            - name: Install Grype
+              run: |
+                  curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
+
+            - name: Install Trivy
+              run: |
+                  curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.21.0
+
+            - name: Scan images for known vulnerabilities with Grype
+              run: |
+                  grype ${{ matrix.phplint_version }}-${{ matrix.platform }}.tar
+
+            - name: Scan images for known vulnerabilities with Trivy
+              run: |
+                  trivy image iermentraut/phplint:${{ matrix.phplint_version }}-${{ matrix.platform }}
 
     Publish:
         runs-on: ubuntu-20.04
