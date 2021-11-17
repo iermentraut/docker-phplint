@@ -44,7 +44,7 @@ jobs:
 
     Test:
         runs-on: ubuntu-20.04
-        needs: build
+        needs: [build]
         strategy:
             matrix:
                 platform: [alpine]
@@ -65,7 +65,8 @@ jobs:
 
     Publish:
         runs-on: ubuntu-20.04
-        needs: test
+        needs: [test]
+        if: github.ref == 'refs/heads/master'
         strategy:
             matrix:
                 platform: [alpine]
