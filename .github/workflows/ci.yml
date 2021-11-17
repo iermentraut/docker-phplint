@@ -58,10 +58,16 @@ jobs:
               with:
                   name: ${{ matrix.phplint_version }}-${{ matrix.platform }}
 
-            - name: Load and test Docker image
+            - name: Find known vulnerabilities in Docker images with Grype (https://github.com/anchore/grype)
+              run: |
+                  curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
+                  grype ${{ matrix.phplint_version }}-${{ matrix.platform }}.tar
+
+            - name: Simple functionality test
               run: |
                   docker load --input ${{ matrix.phplint_version }}-${{ matrix.platform }}.tar
-                  docker run --rm iermentraut/phplint:${{ matrix.phplint_version }}-${{ matrix.platform }}
+                  echo "<?php echo 'Hello world'; ?>" > $(pwd)/hello.php
+                  docker run --rm -v $(pwd):/src iermentraut/phplint:${{ matrix.phplint_version }}-${{ matrix.platform }}
 
     Publish:
         runs-on: ubuntu-20.04
