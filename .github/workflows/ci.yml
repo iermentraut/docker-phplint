@@ -4,6 +4,7 @@ name: ci
 on:
     push:
         paths:
+            - .github/
             - Dockerfile
             - .dockerignore
             - entrypoint.sh
