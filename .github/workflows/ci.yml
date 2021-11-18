@@ -75,8 +75,16 @@ jobs:
             - name: Basic functionality test
               run: |
                   echo "<?php echo 'Hello world'; ?>" > $(pwd)/hello.php
-                  docker run --rm -v $(pwd)/hello.php:/src/hello.php iermentraut/phplint:${{ matrix.phplint_version }}-${{ matrix.platform }}
-                  docker run --rm -u $UID -v $(pwd)/hello.php:/src/hello.php iermentraut/phplint:${{ matrix.phplint_version }}-${{ matrix.platform }}
+                  docker run --rm -v $(pwd)/hello.php:/src/hello.php iermentraut/phplint:${{ matrix.phplint_version }}-${{ matrix.platform }} \
+                    -vvv \
+                    --no-cache \
+                    --no-configuration \
+                    --warning
+                  docker run --rm -u $UID -v $(pwd)/hello.php:/src/hello.php iermentraut/phplint:${{ matrix.phplint_version }}-${{ matrix.platform }} \
+                    -vvv \
+                    --no-cache \
+                    --no-configuration \
+                    --warning
 
             - name: Install Grype
               run: |
