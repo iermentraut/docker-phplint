@@ -53,19 +53,57 @@ repos:
             entry: iermentraut/phplint:3.0.3-alpine
             types: [file]
             files: \.php
+
+    # or if you don't have a .phplint.yml file:
+
+    - repo: local
+      hooks:
+          - id: docker-phplint
+            name: docker-phplint
+            language: docker_image
+            entry: iermentraut/phplint:3.0.3-alpine
+            args:
+                - -vvv
+                - --no-cache
+                - --no-configuration
+                - --warning
+                - --exclude=vendor
+                - --exclude=node_modules
+                - --extensions=php
+                - --jobs=10
+            types: [file]
+            files: \.php
     [...]
 ```
 
 ### Github Action
 
+```
 Coming soon...
+```
 
 ### GitLab CI
 
+```
 Coming soon...
+```
 
 ### Standalone
 
 ```bash
-docker run --rm -v $(pwd):/src iermentraut/phplint:3.0.3-alpine
+docker run --rm -v $(pwd):/src iermentraut/phplint:3.0.3-alpine \
+    -vvv \
+    --no-cache \
+    --no-configuration \
+    --warning \
+    --exclude=vendor \
+    --exclude=node_modules \
+    --extensions=php \
+    --jobs=10
+
+# or
+
+docker run --rm -v $(pwd):/src iermentraut/phplint:3.0.3-alpine \
+    -vvv \
+    -c /src/.phplint.yml
 ```
