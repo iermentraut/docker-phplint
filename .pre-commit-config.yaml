@@ -80,13 +80,9 @@ repos:
 
     # - repo: local
     #   hooks:
-    #     - id: dockfmt
-    #       name: dockfmt
-    #       description: Dockerfile format
-    #       language: docker_image
-    #       entry: jess/dockfmt:v0.3.3
-    #       args:
-    #         - "fmt"
-    #         - "--debug"
-    #         - "--write"
-    #       types: ["dockerfile"]
+    #       - id: docker-phplint
+    #         name: docker-phplint
+    #         language: docker_image
+    #         entry: iermentraut/phplint:3.0.3-alpine
+    #         types: [file]
+    #         files: \.php
