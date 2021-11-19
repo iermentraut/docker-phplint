@@ -4,27 +4,22 @@
 ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/iermentraut/docker-phplint/ci/master)
 ![GitHub](https://img.shields.io/github/license/iermentraut/docker-phplint)
 
-[![Docker](https://badgen.net/badge/icon/docker?icon=docker&label)](https://hub.docker.com/r/iermentraut/phplint)
-[![Docker Pulls](https://img.shields.io/docker/pulls/iermentraut/phplint.svg)]()
-
 ## Description
 
-Docker image for [PHPLint](https://github.com/overtrue/phplint) to use
-with `pre-commit`, `Github Actions`, `GitLab CI` and many others.
-
-All supported tags also have:
-
-- Alpine based image with `-alpine` suffix in tags
+Tiny Alpine-based dockerized version of Composer package [overtrue/phplint](https://github.com/overtrue/phplint) 
+to use with `pre-commit`, `Github Actions`, `GitLab CI` and many others.
 
 ## Supported tags
 
+[![Docker](https://badgen.net/badge/icon/docker?icon=docker&label)](https://hub.docker.com/r/iermentraut/phplint)
+[![Docker Pulls](https://img.shields.io/docker/pulls/iermentraut/phplint.svg)]()
+
 `alpine` based images:
 
-- `3.0.3-alpine` ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/iermentraut/phplint/3.0.3-alpine?style=plastic)
-- `3.0.2-alpine` ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/iermentraut/phplint/3.0.2-alpine?style=plastic)
-
-Check out [Docker Hub](https://hub.docker.com/r/iermentraut/phplint/tags)
-for available tags.
+| Docker tag | PHP Version | Image size |
+|------------|-------------| ------------- |
+| [3.0.3-alpine](https://github.com/iermentraut/docker-phplint/blob/master/Dockerfile) | Latest stable 3.0.3 version | ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/iermentraut/phplint/3.0.3-alpine?style=plastic) |
+| [3.0.2-alpine](https://github.com/iermentraut/docker-phplint/blob/master/Dockerfile) | Latest stable 3.0.2 version | ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/iermentraut/phplint/3.0.2-alpine?style=plastic) |
 
 ## Usage
 
@@ -51,6 +46,9 @@ repos:
             name: docker-phplint
             language: docker_image
             entry: iermentraut/phplint:3.0.3-alpine
+            args:
+                - "--"
+                - "/src"
             types: [file]
             files: \.php
 
@@ -63,29 +61,14 @@ repos:
             language: docker_image
             entry: iermentraut/phplint:3.0.3-alpine
             args:
-                - -vvv
                 - --no-cache
                 - --no-configuration
                 - --warning
                 - --exclude=vendor
                 - --exclude=node_modules
-                - --extensions=php
-                - --jobs=10
             types: [file]
             files: \.php
     [...]
-```
-
-### Github Action
-
-```
-Coming soon...
-```
-
-### GitLab CI
-
-```
-Coming soon...
 ```
 
 ### Standalone
@@ -106,4 +89,16 @@ docker run --rm -v $(pwd):/src iermentraut/phplint:3.0.3-alpine \
 docker run --rm -v $(pwd):/src iermentraut/phplint:3.0.3-alpine \
     -vvv \
     -c /src/.phplint.yml
+```
+
+### Github Action
+
+```
+Coming soon...
+```
+
+### GitLab CI
+
+```
+Coming soon...
 ```
