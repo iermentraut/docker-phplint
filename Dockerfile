@@ -35,10 +35,7 @@ RUN \
     -h /application \
     application && \
   chmod 755 /application && \
-  chown -R application:application /application && \
-  apk update && \
-  apk add --no-cache \
-    bash=5.1.4-r0
+  chown -R application:application /application
 
 COPY --chown=application:application --from=build /tmp/vendor /application/vendor
 
